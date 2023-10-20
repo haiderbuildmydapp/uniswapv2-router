@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "store/store";
 import { UniswapRouterV2Service } from "web3Functions";
-import { MyTokenService } from "web3Functions/myToken";
 import { myTokenAddress } from "utility/contract/myTokenAbi";
 
 const schema = yup.object().shape({
