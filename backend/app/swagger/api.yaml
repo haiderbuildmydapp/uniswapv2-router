@@ -1,0 +1,184 @@
+swagger: "2.0"
+info:
+  title: "Web3 Starter"
+  description: >
+    This is our projects Starter pack .
+  version: "1.0.0"
+host: "localhost:8080"
+schemes:
+  - "http"
+paths:
+  /login:
+    post:
+      summary: "Admin Login"
+      description: "Admin login into system"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: 'user'
+          required: true
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: "logged In"
+          schema:
+            $ref: "#/definitions/Success"
+        404:
+          description: "data not found"
+          $ref: '#/responses/404'
+        500:
+          description: "Internal server error"
+          $ref: '#/responses/500'
+  /auth:
+    get:
+      summary: "Admin Authentication"
+      description: "Check if the admin is authenticated to use admin services "
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "authorization"
+          required: true
+          type: string
+      responses:
+        200:
+          description: "movie found with given id"
+          schema:
+            $ref: "#/definitions/Success"
+        401:
+          description: "data not found"
+          $ref: '#/responses/404'
+        500:
+          description: "Internal server error"
+          $ref: '#/responses/500'  
+
+  /update-password:
+               put:
+                summary: "Update Password"
+                description: "If allow admin to update his password use this api"
+                consumes:
+                  - "application/json"
+                produces:
+                  - "application/json"
+                parameters:
+                  - in: "body"
+                    name: "user"
+                    required: true
+                    schema:
+                      type: object
+                      required:
+                        - new_password
+                        - current_password
+                      properties:
+                        new_password:
+                          type: string
+                        current_password:
+                          type: string
+                  - in: "header"
+                    name: "authorization"
+                    required: true
+                    description: 'Should start from Bearer'
+                    type: string     
+                responses:
+                  200:
+                    description: "Password is updated"
+                    $ref: '#/responses/200'
+                  404:
+                    description: "data not found"
+                    $ref: '#/responses/404'
+                  500:
+                    description: "Internal server error"
+                    $ref: '#/responses/500'
+                  401:
+                    description: "Internal server error"
+                    $ref: '#/responses/401'
+  /update-username:
+               put:
+                summary: "Update username"
+                description: "If allow admin to update his username use this api"
+                consumes:
+                  - "application/json"
+                produces:
+                  - "application/json"
+                parameters:
+                  - in: "body"
+                    name: "user"
+                    required: true
+                    schema:
+                      type: object
+                      required:
+                        - username
+                      properties:
+                        username:
+                          type: string
+                  - in: "header"
+                    name: "authorization"
+                    required: true
+                    description: 'Should start from Bearer'
+                    type: string     
+                responses:
+                  200:
+                    description: "Username is updated"
+                    $ref: '#/responses/200'
+                  404:
+                    description: "data not found"
+                    $ref: '#/responses/404'
+                  500:
+                    description: "Internal server error"
+                    $ref: '#/responses/500'
+                  401:
+                    description: "Internal server error"
+                    $ref: '#/responses/401'
+
+
+responses:
+  200:
+    description: Response successfull
+    schema:
+      $ref: '#/definitions/Success'
+  500:
+    description: Enternal server error
+    schema:
+      $ref: '#/definitions/Error'
+  404:
+    description:  Not found
+    schema:
+      $ref: '#/definitions/Error'
+  401:
+    description:  Unathorize access
+    schema:
+      $ref: '#/definitions/Error'
+
+definitions:
+  Success:
+    type: "object"
+    properties:
+      response:
+        type: "string"
+        example: "success"
+      data  :
+        type: ["array", "object"]
+        example: "{}"
+  Error:
+    type: "object"
+    properties:
+      response:
+        type: "string"
+        example: "failure"
+      error:
+        type: string
+        example: "data not found"
