@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "store/store";
 import { UniswapRouterV2Service } from "web3Functions";
 import { myTokenAddress } from "utility/contract/myTokenAbi";
-import { goldTokenAddress } from "utility/contract/goldTokenAbi";
 
 const schema = yup.object().shape({
   amountIn: yup
@@ -16,18 +15,14 @@ const schema = yup.object().shape({
     .required("Amount is required"),
 });
 
-const SwapTokensForm = () => {
+const SwapTokensForETH = () => {
   const [amountOut, setAmountOut] = useState(0);
-  const [path, setPath] = useState([myTokenAddress, goldTokenAddress]);
+  const [path, setPath] = useState([
+    myTokenAddress,
+    "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+  ]);
 
-  const [buttonLabel, setButtonLabel] = useState("MT ⇌ GD");
-
-  const toggleAddresses = () => {
-    const newPath = [...path];
-    newPath.reverse();
-    setPath(newPath);
-    setButtonLabel(newPath[0] === myTokenAddress ? "MT ⇌ GD" : "GD ⇌ MT");
-  };
+  const [buttonLabel, setButtonLabel] = useState("MT ⇌ ETH");
 
   const { web3, account, chainId } = useAppSelector(
     (state) => state.web3Connect
@@ -44,6 +39,14 @@ const SwapTokensForm = () => {
     resolver: yupResolver(schema),
   });
 
+  const toggleAddresses = () => {
+    const newPath = [...path];
+    newPath.reverse();
+    setPath(newPath);
+    setButtonLabel(newPath[0] === myTokenAddress ? "MT ⇌ ETH" : "ETH ⇌ MT");
+    console.log(path);
+  };
+
   const getFutureTime = () => {
     var currentTimeInSeconds = Math.floor(Date.now() / 1000);
     var futureTimeInSeconds = currentTimeInSeconds + 8 * 60;
@@ -54,13 +57,24 @@ const SwapTokensForm = () => {
   const onSubmit = async (data) => {
     console.log("form data", data);
     try {
-      const tokenReceived = await UniswapRouterV2Service.swapExactTokensForETH(
-        web3,
-        account,
-        data.amountIn,
-        path,
-        getFutureTime()
-      );
+      let tokenReceived;
+      if (buttonLabel === "MT ⇌ ETH") {
+        tokenReceived = await UniswapRouterV2Service.swapExactTokensForETH(
+          web3,
+          account,
+          amountIn,
+          path,
+          getFutureTime()
+        );
+      } else {
+        tokenReceived = await UniswapRouterV2Service.swapExactETHForTokens(
+          web3,
+          account,
+          amountIn,
+          path,
+          getFutureTime()
+        );
+      }
 
       console.log("token received", tokenReceived);
     } catch (error) {
@@ -104,7 +118,7 @@ const SwapTokensForm = () => {
             </p>
           )}
         </div>
-        <p>You will receive {amountOut} ETH</p>
+        <p>You will receive {amountOut} tokens</p>
 
         <button className="btn btn-primary" type="submit">
           Swap
@@ -122,4 +136,4 @@ const SwapTokensForm = () => {
   );
 };
 
-export default SwapTokensForm;
+export default SwapTokensForETH;

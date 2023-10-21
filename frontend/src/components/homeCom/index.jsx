@@ -8,6 +8,7 @@ import { networkObj } from "../data";
 import { ContractUtility } from "utility/contract-utility";
 import { MainModel } from "../common";
 import SwapTokensForm from "components/form/SwapTokensForm";
+import SwapTokensForETH from "components/form/SwapTokensForETH";
 
 const HomeCom = () => {
   const dispatch = useAppDispatch();
@@ -17,8 +18,6 @@ const HomeCom = () => {
   const { web3, account, chainId } = useAppSelector(
     (state) => state.web3Connect
   );
-
-  // const {convertedPrice} = PriceConvertorHook({ amount: 1, id: "2" })
 
   const handleModelOpen = () => {
     setConnectModel(true);
@@ -49,15 +48,19 @@ const HomeCom = () => {
         ""
       )}
       <p>account: {account}</p>
-      <div className="row">
-        <div className="col-4 ">
-          <h4>Swap Tokens</h4>
+      <div className="row m-2">
+        <div className="col-4 border shadow p-1">
+          <h4>Swap Tokens For Tokens</h4>
           <SwapTokensForm />
+        </div>
+        <div className="col-1"></div>
+        <div className="col-4 border shadow p-1">
+          <h4>Swap ETH ⇌ MT</h4>
+          <SwapTokensForETH />
         </div>
       </div>
       <div className="col"></div>
     </div>
   );
 };
-
 export default HomeCom;

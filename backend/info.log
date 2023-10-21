@@ -512,3 +512,9 @@
 {"level":"info","message":"Mongoose Connected cluster0-shard-00-00.1cezz.mongodb.net (backend\\app\\utils\\db.js:13)","timestamp":"2023-10-02T07:10:45.779Z"}
 {"level":"info","message":"Server has started. http://localhost:8080 (backend\\index.js:33)","timestamp":"2023-10-20T09:44:04.148Z"}
 {"level":"info","message":"Mongoose Connected cluster0-shard-00-00.1cezz.mongodb.net (backend\\app\\utils\\db.js:13)","timestamp":"2023-10-20T09:44:06.318Z"}
+{"level":"info","message":"Server has started. http://localhost:8080 (backend\\index.js:33)","timestamp":"2023-10-21T04:10:44.463Z"}
+{"level":"info","message":"Mongoose Connected cluster0-shard-00-00.1cezz.mongodb.net (backend\\app\\utils\\db.js:13)","timestamp":"2023-10-21T04:10:46.925Z"}
+{"level":"info","message":"Server has started. http://localhost:8080 (backend\\index.js:33)","timestamp":"2023-10-21T06:02:57.265Z"}
+{"level":"info","message":"Mongoose Connected cluster0-shard-00-00.1cezz.mongodb.net (backend\\app\\utils\\db.js:13)","timestamp":"2023-10-21T06:02:59.623Z"}
+{"level":"info","message":"Server has started. http://localhost:8080 (backend\\index.js:33)","timestamp":"2023-10-21T06:41:38.416Z"}
+{"level":"info","message":"Mongoose Connected cluster0-shard-00-00.1cezz.mongodb.net (backend\\app\\utils\\db.js:13)","timestamp":"2023-10-21T06:41:40.674Z"}
